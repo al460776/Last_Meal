@@ -23,6 +23,36 @@ public class GameManager : MonoBehaviour
         minuts = Mathf.FloorToInt(time / 60);
         seconds = Mathf.FloorToInt(time % 60);
 
-        Debug.Log("Time: " + minuts + ":" + seconds);
+        //Debug.Log("Time: " + minuts + ":" + seconds);
+    }
+
+    public void ScorePointsRestaurant(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Villager"))
+        {
+            score += 5;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Thief"))
+        {
+            score -= 3;
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public void ScorePointsPlayer(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Villager"))
+        {
+            score -= 5;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Thief"))
+        {
+            score += 3;
+            Destroy(collision.gameObject);
+        }
     }
 }

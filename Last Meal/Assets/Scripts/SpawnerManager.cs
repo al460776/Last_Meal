@@ -51,7 +51,7 @@ public class SpawnerManager : MonoBehaviour
             if (spawnPoints[i].activeSelf == true)
             {
                 int prefabIndex = Random.Range(0, 5);
-                Debug.Log("Prefab Index: " + prefabIndex);
+                //Debug.Log("Prefab Index: " + prefabIndex);
 
                 if (prefabIndex == 0)
                 {
