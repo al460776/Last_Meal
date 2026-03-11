@@ -1,5 +1,7 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,10 +11,16 @@ public class GameManager : MonoBehaviour
     public bool isPaused = false;
     public bool isGameOver = false;
     public int score = 0;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI gameOverText;
+
+    public Slider healthBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+       healthBar.value = 1f;
+       scoreText.text = "Score: " + score;
+       gameOverText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,12 +40,15 @@ public class GameManager : MonoBehaviour
         {
             score += 5;
             Destroy(collision.gameObject);
+            UpdateScoreText();
         }
 
         if (collision.gameObject.CompareTag("Thief"))
         {
             score -= 3;
             Destroy(collision.gameObject);
+            UpdateScoreText();
+            SubstractLive();
         }
     }
 
@@ -47,12 +58,38 @@ public class GameManager : MonoBehaviour
         {
             score -= 5;
             Destroy(collision.gameObject);
+            UpdateScoreText();
         }
 
         if (collision.gameObject.CompareTag("Thief"))
         {
             score += 3;
             Destroy(collision.gameObject);
+            UpdateScoreText();
         }
     }
+
+    public void UpdateScoreText()
+    {
+        
+        scoreText.text = "Score: " + score;
+    }
+    public void SubstractLive()
+    {
+        healthBar.value -= 0.2f;
+        if (healthBar.value <= 0)
+        {
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        gameOverText.gameObject.SetActive(true);
+        scoreText.gameObject.SetActive(false);
+        gameOverText.text = "Game Over!\nFinal Score: " + score + "\nTime: " + minuts + ":" + seconds;
+        Debug.Log("Game Over!");
+    }
+
 }

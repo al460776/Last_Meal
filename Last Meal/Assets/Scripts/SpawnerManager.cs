@@ -22,24 +22,27 @@ public class SpawnerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.time >= 60f)
+        if (gameManager.isGameOver == false)
         {
-            spawnPoints[1].SetActive(true);
-            spawnPoints[3].SetActive(true);
-            spawnPoints[5].SetActive(true);
-            spawnPoints[7].SetActive(true);
-        }
-        /*
-        if (gameManager.time == 30f || gameManager.time == 120f || gameManager.time == 240f || gameManager.time == 360f || gameManager.time == 480f || gameManager.time == 600f)
-        {
-            spTerval -= 1f;
-        }
-*/
+            if (gameManager.time >= 60f)
+            {
+                spawnPoints[1].SetActive(true);
+                spawnPoints[3].SetActive(true);
+                spawnPoints[5].SetActive(true);
+                spawnPoints[7].SetActive(true);
+            }
+            /*
+            if (gameManager.time == 30f || gameManager.time == 120f || gameManager.time == 240f || gameManager.time == 360f || gameManager.time == 480f || gameManager.time == 600f)
+            {
+                spTerval -= 1f;
+            }
+    */
 
-        if (gameManager.time >= spawnInterval)
-        {
-            Spawn();
-            spawnInterval += spTerval;
+            if (gameManager.time >= spawnInterval)
+            {
+                Spawn();
+                spawnInterval += spTerval;
+            }
         }
     }
     private void Spawn()
@@ -55,11 +58,13 @@ public class SpawnerManager : MonoBehaviour
 
                 if (prefabIndex == 0)
                 {
-                    Instantiate(prefabs[1], spawnPoints[i].transform.position, Quaternion.identity);
+                    GameObject npc =Instantiate(prefabs[1], spawnPoints[i].transform.position, Quaternion.identity);
+                    npc.GetComponent<NpcMovement>().gameManager = gameManager;
                 }
                 else if (prefabIndex == 1 || prefabIndex == 2 || prefabIndex == 3)
                 {
-                    Instantiate(prefabs[0], spawnPoints[i].transform.position, Quaternion.identity);
+                    GameObject npc2 =Instantiate(prefabs[0], spawnPoints[i].transform.position, Quaternion.identity);
+                    npc2.GetComponent<NpcMovement>().gameManager = gameManager;
                 }   
             }
         }   

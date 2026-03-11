@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         //Opción 1
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+        if(gameManager.isGameOver == false)
+        {
+             if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
         {
             transform.position = positions[4].transform.position;
             //Debug.Log("W and A pressed");
@@ -34,27 +36,27 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = positions[7].transform.position;
             //Debug.Log("S and D pressed");
-        }else if (Input.GetKeyDown(KeyCode.W))
+        }else if (Input.GetKey(KeyCode.W))
         {
             transform.position = positions[0].transform.position;
             //Debug.Log("W pressed");
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             transform.position = positions[1].transform.position;
             //Debug.Log("S pressed");
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             transform.position = positions[2].transform.position;
             //Debug.Log("A pressed");
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             transform.position = positions[3].transform.position;
             //Debug.Log("D pressed");
         }
-        
+        }        
 
         //Opción 2
         /*

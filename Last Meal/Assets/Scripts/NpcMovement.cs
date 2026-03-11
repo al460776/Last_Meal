@@ -7,9 +7,14 @@ public class NpcMovement : MonoBehaviour
 
     public bool villager = true;
 
+    public GameManager gameManager;
+
     // Update is called once per frame
     void Update()
     {
+        if (gameManager.isGameOver == false)
+        {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        }
     }
 }
