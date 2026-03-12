@@ -13,4 +13,9 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Ciudad");
     }
 
+    public void Menu()
+    {
+        SceneManager.LoadScene("MenuPrincipal");
+    }
+
 }

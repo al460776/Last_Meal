@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
     public int score = 0;
     public TextMeshProUGUI scoreText;
+    public GameObject gameOverPanel;
     public TextMeshProUGUI gameOverText;
 
     public Slider healthBar;
@@ -20,16 +22,19 @@ public class GameManager : MonoBehaviour
     {
        healthBar.value = 1f;
        scoreText.text = "Score: " + score;
-       gameOverText.gameObject.SetActive(false);
+       gameOverPanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
+        if (isGameOver == false)
+        {
+            time += Time.deltaTime;
+            minuts = Mathf.FloorToInt(time / 60);
+            seconds = Mathf.FloorToInt(time % 60);
+        }
 
-        minuts = Mathf.FloorToInt(time / 60);
-        seconds = Mathf.FloorToInt(time % 60);
 
         //Debug.Log("Time: " + minuts + ":" + seconds);
     }
@@ -86,10 +91,19 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
-        gameOverText.gameObject.SetActive(true);
+        gameOverPanel.SetActive(true);
         scoreText.gameObject.SetActive(false);
-        gameOverText.text = "Game Over!\nFinal Score: " + score + "\nTime: " + minuts + ":" + seconds;
+        gameOverText.text = "Game Over!\n Score: " + score + "\nTime: " + minuts + ":" + seconds + "\nFinal Score: " + score * (int)Math.Round(time) / 2;
+        score = score * (int)Math.Round(time) / 2;
         Debug.Log("Game Over!");
+        SaveScore();
     }
 
+    
+    public void SaveScore()
+    {
+        ScoreManage scoreManage = GetComponent<ScoreManage>();
+        scoreManage.WriteScore();
+    }
+    
 }
