@@ -50,24 +50,24 @@ public class SpawnerManager : MonoBehaviour
         if (gameManager.isGameOver == false)
         {
             for (int i = spawnPoints.Length -1 ; i >= 0; i--)
-        {
-            if (spawnPoints[i].activeSelf == true)
             {
-                int prefabIndex = Random.Range(0, 5);
-                //Debug.Log("Prefab Index: " + prefabIndex);
+                if (spawnPoints[i].activeSelf == true)
+                {
+                    int prefabIndex = Random.Range(0, 5);
+                    //Debug.Log("Prefab Index: " + prefabIndex);
 
-                if (prefabIndex == 0)
-                {
-                    GameObject npc =Instantiate(prefabs[1], spawnPoints[i].transform.position, Quaternion.identity);
-                    npc.GetComponent<NpcMovement>().gameManager = gameManager;
+                    if (prefabIndex == 0)
+                    {
+                        GameObject npc =Instantiate(prefabs[1], spawnPoints[i].transform.position, Quaternion.identity);
+                        npc.GetComponent<NpcMovement>().gameManager = gameManager;
+                    }
+                    else if (prefabIndex == 1 || prefabIndex == 2 || prefabIndex == 3)
+                    {
+                        GameObject npc2 =Instantiate(prefabs[0], spawnPoints[i].transform.position, Quaternion.identity);
+                        npc2.GetComponent<NpcMovement>().gameManager = gameManager;
+                    }   
                 }
-                else if (prefabIndex == 1 || prefabIndex == 2 || prefabIndex == 3)
-                {
-                    GameObject npc2 =Instantiate(prefabs[0], spawnPoints[i].transform.position, Quaternion.identity);
-                    npc2.GetComponent<NpcMovement>().gameManager = gameManager;
-                }   
-            }
-        }   
+            }   
         }
     }
 }

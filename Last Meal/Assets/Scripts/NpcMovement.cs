@@ -14,7 +14,7 @@ public class NpcMovement : MonoBehaviour
     {
         if (gameManager.isGameOver == false)
         {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
         }
     }
 }

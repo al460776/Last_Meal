@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public TextMeshProUGUI gameOverText;
 
+    public ContractedSpawn contractedSpawn;
+    public int countVillagers = 0;
+    public GameObject contractedPanel;
+
     public Slider healthBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
        healthBar.value = 1f;
        scoreText.text = "Score: " + score;
        gameOverPanel.SetActive(false);
+       contractedPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,6 +40,15 @@ public class GameManager : MonoBehaviour
             seconds = Mathf.FloorToInt(time % 60);
         }
 
+        if (countVillagers >= 10)
+        {
+            contractedPanel.SetActive(true);
+        }
+        else
+        {
+            contractedPanel.SetActive(false);
+        }
+
 
         //Debug.Log("Time: " + minuts + ":" + seconds);
     }
@@ -45,6 +59,7 @@ public class GameManager : MonoBehaviour
         {
             score += 5;
             Destroy(collision.gameObject);
+            countVillagers++;
             UpdateScoreText();
         }
 
@@ -85,6 +100,15 @@ public class GameManager : MonoBehaviour
         if (healthBar.value <= 0)
         {
             GameOver();
+        }
+    }
+
+    public void ContracetHability()
+    {
+        if (countVillagers >= 10)
+        {
+            countVillagers = 0;
+            contractedSpawn.SpawnContractedVillager();
         }
     }
 

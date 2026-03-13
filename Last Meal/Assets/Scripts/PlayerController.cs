@@ -6,9 +6,12 @@ public class PlayerController : MonoBehaviour
     public GameObject[] positions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            gameManager.ContracetHability();
+        }
     }
 
     // Update is called once per frame
