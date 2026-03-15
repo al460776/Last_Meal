@@ -18,7 +18,17 @@ public class GameManager : MonoBehaviour
 
     public ContractedSpawn contractedSpawn;
     public int countVillagers = 0;
+    //Falta hacer dos counts tanto de Villagers como Thieves pa datos, este solo pa habilidades.
+    public TextMeshProUGUI contractedPanelText;
+    public GameObject contractedHabText;
+    public GameObject partnerHabText;
+
     public GameObject contractedPanel;
+    public GameObject partnerPanel2;
+    public float partnerDuration = 10f;
+    public bool isPartnerActive = false;
+    public PlayerController playerController;
+
 
     public Slider healthBar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,11 +38,15 @@ public class GameManager : MonoBehaviour
        scoreText.text = "Score: " + score;
        gameOverPanel.SetActive(false);
        contractedPanel.SetActive(false);
+       partnerPanel2.SetActive(false);
+       contractedHabText.SetActive(false);
+       partnerHabText.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        contractedPanelText.text = countVillagers.ToString();
         if (isGameOver == false)
         {
             time += Time.deltaTime;
@@ -43,10 +57,35 @@ public class GameManager : MonoBehaviour
         if (countVillagers >= 10)
         {
             contractedPanel.SetActive(true);
+            contractedHabText.SetActive(true);
         }
         else
         {
             contractedPanel.SetActive(false);
+            contractedHabText.SetActive(false);
+        }
+
+        if (countVillagers >= 20)
+        {
+            partnerPanel2.SetActive(true);
+            partnerHabText.SetActive(true);
+        }
+        else
+        {
+            partnerPanel2.SetActive(false);
+            partnerHabText.SetActive(false);
+        }
+
+        if (isPartnerActive)
+        {
+            partnerDuration -= Time.deltaTime;
+            if (partnerDuration <= 0)
+            {
+                isPartnerActive = false;
+                partnerDuration = 10f;
+                playerController.triggerCollider.isTrigger = false;
+                playerController.triggerSize = new Vector2(1f, 1f);
+            }
         }
 
 
@@ -107,8 +146,20 @@ public class GameManager : MonoBehaviour
     {
         if (countVillagers >= 10)
         {
-            countVillagers = 0;
+            //Futuro, linea dejar en solo = 0, o dejarlo así
+            countVillagers -= 10;
             contractedSpawn.SpawnContractedVillager();
+        }
+    }
+
+    public void PartnerHability()
+    {
+        if (countVillagers >= 20)
+        {
+            //Futuro, linea dejar en solo = 0, o dejarlo así
+            countVillagers -= 20;
+            isPartnerActive = true;
+            playerController.triggerSize = new Vector2(5f, 5f);
         }
     }
 
