@@ -11,6 +11,8 @@ public class LoadScore : MonoBehaviour
 
     public TMP_Text upRankingText; //Referencia al TextMeshPro para mostrar el ranking positivo
     public TMP_Text downRankingText; //Referencia al TextMeshPro para mostrar el ranking negativo
+    public TMP_Text upPanelText;
+    public TMP_Text downPanelText;
     private List<ScoreData> allScores = new List<ScoreData>();
 
     public GameObject upRankingPanel;
@@ -74,10 +76,15 @@ public class LoadScore : MonoBehaviour
             upRankingText.text = "Play to score.";
             return;
         }
+        else
+        {
+            upPanelText.text = $"{ "#"} { "Score",8} { "Time",6} { "VE",4} { "TE",4} { "VB",4} { "TB",4}\n";
+        }
+
 
         for (int i = 0; i < count; i++)
         {
-            upRankingText.text += $"{i + 1}.  \t{allScores[i].score} \t{allScores[i].minutes} \t{allScores[i].seconds}\n";
+            upRankingText.text += $"{i + 1}. {allScores[i].score,8} {($"{allScores[i].minutes}:{allScores[i].seconds:00}"),6} {allScores[i].countVillagersEnter,4} {allScores[i].countThievesEnter,4} {allScores[i].countVillagersBlock,4} {allScores[i].countThievesBlock,4}\n";
         }
 
         Debug.Log($"Mostrando top {count} puntuaciones en HUD");
@@ -133,11 +140,14 @@ public class LoadScore : MonoBehaviour
         {
             downRankingText.text = "Play to score.";
             return;
+        }else
+        {
+            downPanelText.text = $"{ "#"} { "Score",8} { "Time",6} { "VE",4} { "TE",4} { "VB",4} { "TB",4}\n";
         }
 
         for (int i = 0; i < count; i++)
         {
-            downRankingText.text += $"{i + 1}.  \t{allScores[i].score} \t{allScores[i].minutes} \t{allScores[i].seconds}\n";
+            downRankingText.text += $"{i + 1}. {allScores[i].score,8} {($"{allScores[i].minutes}:{allScores[i].seconds:00}"),6} {allScores[i].countVillagersEnter,4} {allScores[i].countThievesEnter,4} {allScores[i].countVillagersBlock,4} {allScores[i].countThievesBlock,4}\n";
         }
 
         Debug.Log($"Mostrando top {count} puntuaciones en HUD");

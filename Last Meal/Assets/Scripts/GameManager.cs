@@ -18,7 +18,12 @@ public class GameManager : MonoBehaviour
 
     public ContractedSpawn contractedSpawn;
     public int countVillagers = 0;
-    //Falta hacer dos counts tanto de Villagers como Thieves pa datos, este solo pa habilidades.
+    //Contador pa JSON y mostrar en pantalla
+    public int countThievesEnter = 0;
+    public int countVillagersEnter = 0;
+    public int countVillagersBlock = 0;
+    public int countThievesBlock = 0;
+
     public TextMeshProUGUI contractedPanelText;
     public GameObject contractedHabText;
     public GameObject partnerHabText;
@@ -103,6 +108,7 @@ public class GameManager : MonoBehaviour
             score += 5;
             Destroy(collision.gameObject);
             countVillagers++;
+            countVillagersEnter++;
             UpdateScoreText();
         }
 
@@ -110,6 +116,7 @@ public class GameManager : MonoBehaviour
         {
             score -= 3;
             Destroy(collision.gameObject);
+            countThievesEnter++;
             UpdateScoreText();
             SubstractLive();
         }
@@ -121,6 +128,7 @@ public class GameManager : MonoBehaviour
         {
             score -= 5;
             Destroy(collision.gameObject);
+            countVillagersBlock++;
             UpdateScoreText();
         }
 
@@ -128,6 +136,7 @@ public class GameManager : MonoBehaviour
         {
             score += 3;
             Destroy(collision.gameObject);
+            countThievesBlock++;
             UpdateScoreText();
         }
     }
@@ -172,7 +181,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         gameOverPanel.SetActive(true);
         scoreText.gameObject.SetActive(false);
-        gameOverText.text = "Game Over!\n Score: " + score + "\nTime: " + minuts + ":" + seconds + "\nFinal Score: " + score * (int)Math.Round(time) / 2;
+        gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nFinal Score: " + score * (int)Math.Round(time) / 2 + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock;
         score = score * (int)Math.Round(time) / 2;
         Debug.Log("Game Over!");
         SaveScore();

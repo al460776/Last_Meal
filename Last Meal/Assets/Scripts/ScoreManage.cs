@@ -8,6 +8,10 @@ public class ScoreData
     public int score;
     public int minutes;
     public int seconds;
+    public int countVillagersEnter;
+    public int countThievesEnter;
+    public int countVillagersBlock;
+    public int countThievesBlock;
 }
 
 public class ScoreManage : MonoBehaviour
@@ -21,6 +25,10 @@ public class ScoreManage : MonoBehaviour
         data.score = manager.score;
         data.minutes = manager.minuts;
         data.seconds = manager.seconds;
+        data.countVillagersEnter = manager.countVillagersEnter;
+        data.countThievesEnter = manager.countThievesEnter;
+        data.countVillagersBlock = manager.countVillagersBlock;
+        data.countThievesBlock = manager.countThievesBlock;
 
         string json = JsonUtility.ToJson(data, true);
         Debug.Log("Datos de telemetría en JSON: " + json);
