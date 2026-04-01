@@ -127,7 +127,8 @@ public class GameManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Villager"))
         {
             score -= 5;
-            Destroy(collision.gameObject);
+            NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+            npc.isStopped = true;
             countVillagersBlock++;
             UpdateScoreText();
         }
@@ -135,7 +136,8 @@ public class GameManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Thief"))
         {
             score += 3;
-            Destroy(collision.gameObject);
+            NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+            npc.isStopped = true;
             countThievesBlock++;
             UpdateScoreText();
         }
@@ -181,6 +183,9 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         gameOverPanel.SetActive(true);
         scoreText.gameObject.SetActive(false);
+        contractedPanel.SetActive(false);
+        partnerPanel2.SetActive(false);
+        contractedPanelText.gameObject.SetActive(false);
         gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nFinal Score: " + score * (int)Math.Round(time) / 2 + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock;
         score = score * (int)Math.Round(time) / 2;
         Debug.Log("Game Over!");

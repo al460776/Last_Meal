@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Animator animator;
     public GameManager gameManager;
     public GameObject[] positions;
 
@@ -12,13 +13,22 @@ public class PlayerController : MonoBehaviour
     public Vector3 targetPosition;
     public float speed = 2f;
 
+    public float stopDuration = 0.5f;
+    private float stopTimer = 0f;
+    private bool isStopped = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
         triggerCollider = GetComponent<BoxCollider2D>();
         triggerCollider.isTrigger = false;
         triggerCollider.size = triggerSize;
+        animator.SetBool("EvilLose", false);
+        animator.SetBool("GodLose", false);
+        animator.SetBool("EvilStop", false);
+        animator.SetBool("GodStop", false);
     }
 
     void Update()
@@ -32,6 +42,18 @@ public class PlayerController : MonoBehaviour
         {
             gameManager.PartnerHability();
         }
+
+        
+        if (isStopped)
+        {
+            stopTimer += Time.deltaTime;
+            if (stopTimer >= stopDuration)
+            {
+                stopTimer = 0f;
+                isStopped = false;
+                animator.SetBool("GodStop", false);
+            }  
+        } 
     }
 
     // Update is called once per frame
@@ -41,46 +63,45 @@ public class PlayerController : MonoBehaviour
         if(gameManager.isGameOver == false)
         {
              if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
-        {
-            transform.position = positions[4].transform.position;
-            //Debug.Log("W and A pressed");
-        }
-        else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-        {
-            transform.position = positions[5].transform.position;
-            //Debug.Log("W and D pressed");
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-        {
-            transform.position = positions[6].transform.position;
-            //Debug.Log("S and A pressed");
-        }
-        else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
-        {
-            transform.position = positions[7].transform.position;
-            //Debug.Log("S and D pressed");
-        }else if (Input.GetKey(KeyCode.W))
-        {
-            transform.position = positions[0].transform.position;
-            //Debug.Log("W pressed");
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            transform.position = positions[1].transform.position;
-            //Debug.Log("S pressed");
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            transform.position = positions[2].transform.position;
-            //Debug.Log("A pressed");
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            transform.position = positions[3].transform.position;
-            //Debug.Log("D pressed");
-        }
-        }        
-
+            {
+                transform.position = positions[4].transform.position;
+                //Debug.Log("W and A pressed");
+            }
+            else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+            {
+                transform.position = positions[5].transform.position;
+                //Debug.Log("W and D pressed");
+            }
+            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+            {
+                transform.position = positions[6].transform.position;
+                //Debug.Log("S and A pressed");
+            }
+            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+            {
+                transform.position = positions[7].transform.position;
+                //Debug.Log("S and D pressed");
+            }else if (Input.GetKey(KeyCode.W))
+            {
+                transform.position = positions[0].transform.position;
+                //Debug.Log("W pressed");
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                transform.position = positions[1].transform.position;
+                //Debug.Log("S pressed");
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                transform.position = positions[2].transform.position;
+                //Debug.Log("A pressed");
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                transform.position = positions[3].transform.position;
+                //Debug.Log("D pressed");
+            }
+        }       
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -94,11 +115,16 @@ public class PlayerController : MonoBehaviour
             else
             {
                 gameManager.ScorePointsPlayer(collision);
+                animator.SetBool("GodStop", true);
+                isStopped = true;
+
             }
         }
-        else
+        else if(collision.gameObject.CompareTag("Thief") || collision.gameObject.CompareTag("Villager"))
         {
             gameManager.ScorePointsPlayer(collision);
+            animator.SetBool("GodStop", true);
+            isStopped = true;
         }
     }
 
