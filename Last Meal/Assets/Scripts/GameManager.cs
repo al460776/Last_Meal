@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject contractedPanel;
     public GameObject partnerPanel2;
+    public GameObject pausePanel;
+
     public float partnerDuration = 10f;
     public bool isPartnerActive = false;
     public PlayerController playerController;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Time.timeScale = 1f;
        healthBar.value = 1f;
        scoreText.text = "Score: " + score;
        gameOverPanel.SetActive(false);
@@ -50,55 +53,81 @@ public class GameManager : MonoBehaviour
        partnerPanel2.SetActive(false);
        contractedHabText.SetActive(false);
        partnerHabText.SetActive(false);
+       pausePanel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        contractedPanelText.text = countVillagers.ToString();
-        if (isGameOver == false)
+        if (!isGameOver)
         {
-            time += Time.deltaTime;
-            minuts = Mathf.FloorToInt(time / 60);
-            seconds = Mathf.FloorToInt(time % 60);
-        }
-
-        if (countVillagers >= 10)
-        {
-            contractedPanel.SetActive(true);
-            contractedHabText.SetActive(true);
-        }
-        else
-        {
-            contractedPanel.SetActive(false);
-            contractedHabText.SetActive(false);
-        }
-
-        if (countVillagers >= 20)
-        {
-            partnerPanel2.SetActive(true);
-            partnerHabText.SetActive(true);
-        }
-        else
-        {
-            partnerPanel2.SetActive(false);
-            partnerHabText.SetActive(false);
-        }
-
-        if (isPartnerActive)
-        {
-            partnerDuration -= Time.deltaTime;
-            if (partnerDuration <= 0)
+             contractedPanelText.text = countVillagers.ToString();
+            if (isGameOver == false)
             {
-                isPartnerActive = false;
-                partnerDuration = 10f;
-                playerController.triggerCollider.isTrigger = false;
-                playerController.triggerSize = new Vector2(1f, 1f);
+                time += Time.deltaTime;
+                minuts = Mathf.FloorToInt(time / 60);
+                seconds = Mathf.FloorToInt(time % 60);
             }
+
+            if (countVillagers >= 10)
+            {
+                contractedPanel.SetActive(true);
+                contractedHabText.SetActive(true);
+            }
+            else
+            {
+                contractedPanel.SetActive(false);
+                contractedHabText.SetActive(false);
+            }
+
+            if (countVillagers >= 20)
+            {
+                partnerPanel2.SetActive(true);
+                partnerHabText.SetActive(true);
+            }
+            else
+            {
+                partnerPanel2.SetActive(false);
+                partnerHabText.SetActive(false);
+            }
+
+            if (isPartnerActive)
+            {
+                partnerDuration -= Time.deltaTime;
+                if (partnerDuration <= 0)
+                {
+                    isPartnerActive = false;
+                    partnerDuration = 10f;
+                    playerController.triggerCollider.isTrigger = false;
+                    playerController.triggerSize = new Vector2(1f, 1f);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+            {
+                Pause();
+                isPaused = true;
+            }else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+            {
+                isPaused = false;
+                Continue();
+            }
+
+
         }
-
-
+       
         //Debug.Log("Time: " + minuts + ":" + seconds);
+    }
+    public void Pause()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void Continue()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void ScorePointsRestaurant(Collision2D collision)
