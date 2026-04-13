@@ -54,5 +54,20 @@ public class NpcMovement : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        if (gameManager.isPartnerActive)
+        {
+            if (villager)
+            {
+                animator.SetBool("Partner", true);
+            }
+        }
+        else
+        {
+            if (villager)
+            {
+                animator.SetBool("Partner", false);
+            }
+        }
     }
 }
