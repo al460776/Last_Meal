@@ -11,11 +11,11 @@ public class ContractedCollision : MonoBehaviour
 
     public Vector3 targetPosition;
     public float speed = 2f;
-    /*
+    
     public float stopDuration = 0.6f;
     private float stopTimer = 0f;
     private bool isStopped = false;
-    */
+    
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -36,20 +36,20 @@ public class ContractedCollision : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
-/*
+
         if (isStopped)
         {
+            animator.SetBool("ContractedStop", true);
             stopTimer += Time.deltaTime;
             if (stopTimer >= stopDuration)
             {
                 isStopped = false;
-                AutoDestroy();
+                //AutoDestroy();
                 stopTimer = 0f;
-                animator.SetBool("ContractedStop", false);
+                Destroy(gameObject);
             }
             
         }
-        */
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -73,7 +73,8 @@ public class ContractedCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Thief"))
         {
             gameManager.ScorePointsPlayer(collision);
-            Destroy(gameObject);
+            isStopped = true;
+            //Destroy(gameObject);
         }
         
     }
