@@ -218,8 +218,9 @@ public class GameManager : MonoBehaviour
         contractedPanelText.gameObject.SetActive(false);
         contractedHabText.SetActive(false);
         partnerHabText.SetActive(false);
-        gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nFinal Score: " + score * (int)Math.Round(time) / 2 + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock;
-        score = score * (int)Math.Round(time) / 2;
+        int score2 = score + countVillagersEnter + countThievesBlock - countThievesEnter - countVillagersBlock * (int)Math.Round(time) / 2;
+        gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock + "\nFinal Score: " + score2;
+        score = score2;
         Debug.Log("Game Over!");
         SaveScore();
     }

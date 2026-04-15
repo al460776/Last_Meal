@@ -507,7 +507,7 @@ MonoBehaviour:
   triggerCollider: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
   speed: 2
-  stopDuration: 0.8
+  stopDuration: 0.6
   stopDuration2: 2
 --- !u!1 &115528398
 GameObject:
