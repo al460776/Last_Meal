@@ -12,6 +12,7 @@ public class SpawnerManager : MonoBehaviour
 
     public float speedPlus = 2f;
     public float intervalPlus = 90f;
+    public float plus = 0.15f;
     private float stopTimer = 0f;
 
 
@@ -52,7 +53,7 @@ public class SpawnerManager : MonoBehaviour
             stopTimer += Time.deltaTime;
             if (stopTimer >= intervalPlus)
             {
-                speedPlus += 0.15f;
+                speedPlus += plus;
                 stopTimer = 0f;
             }
         }

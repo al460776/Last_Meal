@@ -3047,7 +3047,8 @@ MonoBehaviour:
   spawnInterval: 5
   spTerval: 5
   speedPlus: 2
-  intervalPlus: 90
+  intervalPlus: 30
+  plus: 0.4
 --- !u!4 &1456874923
 Transform:
   m_ObjectHideFlags: 0
