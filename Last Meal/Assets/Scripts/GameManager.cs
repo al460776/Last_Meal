@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     public Slider healthBar;
     //Points World
     private List<ScoreData> allScores = new List<ScoreData>();
-    public bool mood = false; //false = GOD, True = devil
+    public static bool mood = false; //false = GOD, True = devil
 
 
     void Awake()

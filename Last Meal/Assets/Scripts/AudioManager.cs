@@ -14,7 +14,8 @@ public class AudioManager : MonoBehaviour
     [Header("----------- Background Music -----------")]
     public AudioClip musicMenu1;
     public AudioClip musicMenu2;
-    public AudioClip musicNivel;
+    public AudioClip godMusic;
+    public AudioClip devilMusic;
 
     private bool isInMenu = false;
     private AudioClip currentMenuClip;
@@ -68,10 +69,16 @@ public class AudioManager : MonoBehaviour
             musicSource.clip = currentMenuClip;
             musicSource.Play();
         }
-        else if (sceneName == "Ciudad")
+        else  if (sceneName == "Ciudad")
         {
-            isInMenu = false;
-            musicSource.clip = musicNivel;
+            if (GameManager.mood == false)
+            {
+                musicSource.clip = godMusic;
+            }
+            else
+            {
+                musicSource.clip = devilMusic;
+            }  
             musicSource.Play();
         }
         else

@@ -840,7 +840,8 @@ MonoBehaviour:
   click: {fileID: 8300000, guid: bec5b0d9b410b384594f72bb35b23759, type: 3}
   musicMenu1: {fileID: 8300000, guid: e1edabfa507541845a70bc56424d2a79, type: 3}
   musicMenu2: {fileID: 8300000, guid: 6f15541159085974a8ef208a291bdd7b, type: 3}
-  musicNivel: {fileID: 8300000, guid: 402244e7803672f489fd92e69354f2e5, type: 3}
+  godMusic: {fileID: 8300000, guid: 402244e7803672f489fd92e69354f2e5, type: 3}
+  devilMusic: {fileID: 8300000, guid: e1edabfa507541845a70bc56424d2a79, type: 3}
   canvaMusic: {fileID: 1645285903}
 --- !u!4 &334601428
 Transform:

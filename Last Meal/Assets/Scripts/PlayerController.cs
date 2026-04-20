@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         {
             losingAnim = true;
             loseTime = 0f;
-            if (gameManager.mood)
+            if (GameManager.mood)
             {
                 animator.SetBool("EvilLose", true);
             }
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 gameManager.ScorePointsPlayer(collision);
-                if (gameManager.mood)
+                if (GameManager.mood)
                 {
                     animator.SetBool("EvilStop", true);
                 }
@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         else if(collision.gameObject.CompareTag("Thief") || collision.gameObject.CompareTag("Villager"))
         {
             gameManager.ScorePointsPlayer(collision);
-            if (gameManager.mood)
+            if (GameManager.mood)
                 {
                     animator.SetBool("EvilStop", true);
                 }
