@@ -102,42 +102,45 @@ public class PlayerController : MonoBehaviour
         //Opción 1
         if(gameManager.isGameOver == false)
         {
+            Vector2 stick = moveAction.ReadValue<Vector2>();
+            float ejeX = stick.x;
+            float ejeY = stick.y;
             //Falta movimiento de Joystick Aqui :D
-             if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+             if ((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) || (ejeX < -0.5f && ejeY > 0.5f))
             {
                 transform.position = positions[4].transform.position;
                 //Debug.Log("W and A pressed");
             }
-            else if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
+            else if ((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) || (ejeX > 0.5f && ejeY > 0.5f))
             {
                 transform.position = positions[5].transform.position;
                 //Debug.Log("W and D pressed");
             }
-            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
+            else if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || (ejeX < -0.5f && ejeY < -0.5f))
             {
                 transform.position = positions[6].transform.position;
                 //Debug.Log("S and A pressed");
             }
-            else if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
+            else if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) || (ejeX > 0.5f && ejeY < -0.5f))
             {
                 transform.position = positions[7].transform.position;
                 //Debug.Log("S and D pressed");
-            }else if (Input.GetKey(KeyCode.W))
+            }else if (Input.GetKey(KeyCode.W) || ejeY > 0.5f)
             {
                 transform.position = positions[0].transform.position;
                 //Debug.Log("W pressed");
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.S) || ejeY < -0.5f)
             {
                 transform.position = positions[1].transform.position;
                 //Debug.Log("S pressed");
             }
-            else if (Input.GetKey(KeyCode.A))
+            else if (Input.GetKey(KeyCode.A) || ejeX < -0.5f)
             {
                 transform.position = positions[2].transform.position;
                 //Debug.Log("A pressed");
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.D) || ejeX > 0.5f)
             {
                 transform.position = positions[3].transform.position;
                 //Debug.Log("D pressed");
