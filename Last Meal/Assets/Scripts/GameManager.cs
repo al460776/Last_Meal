@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
        partnerPanel2.SetActive(false);
        contractedHabText.SetActive(false);
        partnerHabText.SetActive(false);
-       pausePanel.SetActive(false);
+       //pausePanel.SetActive(false);
     }
 
     // Update is called once per frame
