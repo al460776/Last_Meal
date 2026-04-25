@@ -408,9 +408,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8745098, g: 0.5176471, b: 0.2901961, a: 1}
+    m_PressedColor: {r: 0.4627451, g: 0.9411765, b: 0.2901961, a: 1}
+    m_SelectedColor: {r: 0.89411765, g: 0.43529412, b: 0.14509805, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -2290,6 +2290,7 @@ MonoBehaviour:
   spritePartner: {fileID: 21300000, guid: c77e6cd05e72b5042965a728216c9f63, type: 3}
   healthBar: {fileID: 622286710}
   pauseAction: {fileID: 6572363699521711486}
+  butonLocal: {fileID: 2111921840}
 --- !u!4 &856283228
 Transform:
   m_ObjectHideFlags: 0
@@ -2317,6 +2318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d380092ee9983146a06079c01cdbbd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  button: {fileID: 0}
 --- !u!114 &856283230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4227,7 +4229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6117968, b: 0.3075471, a: 1}
+  m_Color: {r: 1, g: 0.8813479, b: 0.30588233, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4450,9 +4452,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8745098, g: 0.5176471, b: 0.2901961, a: 1}
+    m_PressedColor: {r: 0.4627451, g: 0.9411765, b: 0.2901961, a: 1}
+    m_SelectedColor: {r: 0.89411765, g: 0.43529412, b: 0.14509805, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4554,7 +4556,7 @@ GameObject:
   - component: {fileID: 2111921843}
   - component: {fileID: 2111921842}
   m_Layer: 5
-  m_Name: Continue
+  m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4602,9 +4604,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8745098, g: 0.5176471, b: 0.2901961, a: 1}
+    m_PressedColor: {r: 0.4627451, g: 0.9411765, b: 0.2901961, a: 1}
+    m_SelectedColor: {r: 0.89411765, g: 0.43529412, b: 0.14509805, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

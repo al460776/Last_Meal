@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 
@@ -56,6 +57,8 @@ public class GameManager : MonoBehaviour
     public PlayerInput pauseAction;
     private InputAction pauseInputAction;
 
+    //Boton pausa
+    public GameObject butonLocal;
 
     void Awake()
     {
@@ -193,6 +196,7 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         pausePanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(butonLocal);
         Time.timeScale = 0f;
     }
 
