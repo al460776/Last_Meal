@@ -3187,6 +3187,8 @@ MonoBehaviour:
   - {fileID: 6541202560371582637, guid: aafa2cf12f1af8a438e08684a9b181b8, type: 3}
   gameManager: {fileID: 856283227}
   spawnInterval: 5
+  spIntervalPlus: 30
+  spItPPlus: 0.2
   spTerval: 5
   speedPlus: 2
   intervalPlus: 30
