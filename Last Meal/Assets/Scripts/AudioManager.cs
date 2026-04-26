@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class AudioManager : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class AudioManager : MonoBehaviour
     private AudioClip currentMenuClip;
 
     public GameObject canvaMusic;
+    public GameObject canvasScene;
+    public GameObject configButton;
+
+    //Button nav
+    public GameObject exitButton;
+    public GameObject butonLocal;
     private void Awake()
     {
         if (instance == null)
@@ -32,7 +39,14 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
+
+        canvasScene = GameObject.Find("Canvas");
+        configButton = GameObject.Find("ConfigButton");
+        butonLocal = GameObject.Find("Play");
+
+        configButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(MusicMenu);
+
+}
 
     private void Start()
     {
@@ -47,16 +61,35 @@ public class AudioManager : MonoBehaviour
         {
             AlternarMusicaMenu();
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+    public void MusicMenu()
+    {
+        canvaMusic.SetActive(!canvaMusic.activeSelf);
+        canvasScene.SetActive(!canvasScene.activeSelf);
+        if (!canvaMusic.activeSelf)
         {
-            canvaMusic.SetActive(!canvaMusic.activeSelf);
+            EventSystem.current.SetSelectedGameObject(butonLocal);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(exitButton);
         }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         CambiarMusica(scene.name);
+        canvasScene = GameObject.Find("Canvas");
+        configButton = GameObject.Find("ConfigButton");
+        butonLocal = GameObject.Find("Play");
+
+        if (scene.name == "Ciudad")
+        {
+          canvasScene.SetActive(false);  
+        }
+        configButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(MusicMenu);
+
     }
 
     private void CambiarMusica(string sceneName)

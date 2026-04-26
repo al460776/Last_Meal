@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 
@@ -51,6 +53,13 @@ public class GameManager : MonoBehaviour
     private List<ScoreData> allScores = new List<ScoreData>();
     public static bool mood = false; //false = GOD, True = devil
 
+    //Mando pausa
+    public PlayerInput pauseAction;
+    private InputAction pauseInputAction;
+
+    //Botones
+    public GameObject butonLocal;
+    public GameObject butonFinal;
 
     void Awake()
     {
@@ -105,6 +114,8 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("Mood: " + mood + " CountPoint: " + countPoint);
 
+        pauseInputAction = pauseAction.actions["Pause"];
+
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -118,7 +129,7 @@ public class GameManager : MonoBehaviour
        partnerPanel2.SetActive(false);
        contractedHabText.SetActive(false);
        partnerHabText.SetActive(false);
-       pausePanel.SetActive(false);
+       //pausePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -168,11 +179,11 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+            if (Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered && !isPaused)
             {
                 Pause();
                 isPaused = true;
-            }else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+            }else if (Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered && isPaused)
             {
                 isPaused = false;
                 Continue();
@@ -186,6 +197,7 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         pausePanel.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(butonLocal);
         Time.timeScale = 0f;
     }
 
@@ -287,6 +299,7 @@ public class GameManager : MonoBehaviour
         gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock + "\nFinal Score: " + score2;
         score = score2;
         Debug.Log("Game Over!");
+        EventSystem.current.SetSelectedGameObject(butonFinal);
         SaveScore();
     }
 

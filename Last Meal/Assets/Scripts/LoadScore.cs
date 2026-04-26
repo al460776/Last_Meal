@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class LoadScore : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class LoadScore : MonoBehaviour
     public GameObject upRankingPanel;
     public GameObject downRankingPanel;
     public GameObject mainPanel;
+    //Botones
+    public GameObject buttonExitUp;
+    public GameObject buttonExitDown;
+    public GameObject buttonMain;
 
     void Start()
     {
@@ -88,6 +93,8 @@ public class LoadScore : MonoBehaviour
         }
 
         Debug.Log($"Mostrando top {count} puntuaciones en HUD");
+        EventSystem.current.SetSelectedGameObject(buttonExitUp);
+        //
     }
 
     void LoadDownScores()
@@ -151,6 +158,7 @@ public class LoadScore : MonoBehaviour
         }
 
         Debug.Log($"Mostrando top {count} puntuaciones en HUD");
+        EventSystem.current.SetSelectedGameObject(buttonExitDown);
     }
 
     public void ShowMainPanel()
@@ -158,5 +166,6 @@ public class LoadScore : MonoBehaviour
         mainPanel.SetActive(true);
         upRankingPanel.SetActive(false);
         downRankingPanel.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(buttonMain);
     }
 }

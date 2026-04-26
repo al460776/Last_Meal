@@ -7,6 +7,9 @@ public class SpawnerManager : MonoBehaviour
     public GameManager gameManager;
 
     public float spawnInterval = 5f;
+    public float spIntervalPlus = 40f;
+    public float spItPPlus = 0.2f;
+    private float timerSpawnPlus = 0f;
 
     public float spTerval = 5f;
 
@@ -55,6 +58,14 @@ public class SpawnerManager : MonoBehaviour
             {
                 speedPlus += plus;
                 stopTimer = 0f;
+            }
+
+            //ll
+            timerSpawnPlus += Time.deltaTime;
+            if (timerSpawnPlus >= spIntervalPlus && !(spTerval <= 1f))
+            {
+                spTerval -= spItPPlus;
+                timerSpawnPlus = 0f;
             }
         }
     }
