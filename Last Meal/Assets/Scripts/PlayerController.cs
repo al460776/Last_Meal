@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     private bool isStopped = false;
 
+    public ParticleSystem moveEffect;
+    private Vector3 lastPosition;
+
     //Mando
     private PlayerInput controls;
     private InputAction moveAction;
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("GodLose", false);
         animator.SetBool("EvilStop", false);
         animator.SetBool("GodStop", false);
+        lastPosition = transform.position;
     }
 
     void Update()
@@ -123,44 +127,53 @@ public class PlayerController : MonoBehaviour
             bool isDiagDownRight = isDown && isRight && Mathf.Abs(diagX - diagY) < diagonales;
             bool isDiagDownLeft = isDown && isLeft && Mathf.Abs(diagX - diagY) < diagonales;
 
+            Vector3 currentPosition = transform.position;
+
              if ((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) || isDiagUpLeft)
             {
-                transform.position = positions[4].transform.position;
+                currentPosition = positions[4].transform.position;
                 //Debug.Log("W and A pressed");
             }
             else if ((Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) || isDiagUpRight)
             {
-                transform.position = positions[5].transform.position;
+                currentPosition = positions[5].transform.position;
                 //Debug.Log("W and D pressed");
             }
             else if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A)) || isDiagDownLeft)
             {
-                transform.position = positions[6].transform.position;
+                currentPosition = positions[6].transform.position;
                 //Debug.Log("S and A pressed");
             }
             else if ((Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) || isDiagDownRight)
             {
-                transform.position = positions[7].transform.position;
+                currentPosition = positions[7].transform.position;
                 //Debug.Log("S and D pressed");
             }else if (Input.GetKey(KeyCode.W) || isUp)
             {
-                transform.position = positions[0].transform.position;
+                currentPosition = positions[0].transform.position;
                 //Debug.Log("W pressed");
             }
             else if (Input.GetKey(KeyCode.S) || isDown)
             {
-                transform.position = positions[1].transform.position;
+                currentPosition = positions[1].transform.position;
                 //Debug.Log("S pressed");
             }
             else if (Input.GetKey(KeyCode.A) || isLeft)
             {
-                transform.position = positions[2].transform.position;
+                currentPosition = positions[2].transform.position;
                 //Debug.Log("A pressed");
             }
             else if (Input.GetKey(KeyCode.D) || isRight)
             {
-                transform.position = positions[3].transform.position;
+                currentPosition = positions[3].transform.position;
                 //Debug.Log("D pressed");
+            }
+
+            if (currentPosition != lastPosition)
+            {
+                transform.position = currentPosition;
+                moveEffect.Play();
+                lastPosition = currentPosition;
             }
         }       
     }
