@@ -30,6 +30,9 @@ public class AudioManager : MonoBehaviour
     public GameObject exitButton;
     public GameObject butonLocal;
     public GameObject controlExistButton;
+    public bool isConfig = false;
+    public bool isMusic = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -57,6 +60,8 @@ public class AudioManager : MonoBehaviour
         CambiarMusica(SceneManager.GetActiveScene().name);
         canvaMusic.SetActive(false);
         controlsCanvas.SetActive(false);
+        isConfig = false;
+        isMusic = false;
     }
 
     private void Update()
@@ -69,6 +74,7 @@ public class AudioManager : MonoBehaviour
 
     public void MusicMenu()
     {
+        isMusic = !isMusic;
         canvaMusic.SetActive(!canvaMusic.activeSelf);
         canvasScene.SetActive(!canvasScene.activeSelf);
         if (!canvaMusic.activeSelf)
@@ -83,6 +89,7 @@ public class AudioManager : MonoBehaviour
 
     public void ControlsMenu()
     {
+        isConfig = !isConfig;
         controlsCanvas.SetActive(!controlsCanvas.activeSelf);
         canvaMusic.SetActive(!canvaMusic.activeSelf);
         if (!controlsCanvas.activeSelf)

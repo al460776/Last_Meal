@@ -1223,6 +1223,8 @@ MonoBehaviour:
   exitButton: {fileID: 1226857027}
   butonLocal: {fileID: 0}
   controlExistButton: {fileID: 533882335}
+  isConfig: 0
+  isMusic: 0
 --- !u!4 &334601428
 Transform:
   m_ObjectHideFlags: 0

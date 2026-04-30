@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public GameObject butonFinal;
 
     public bool isConfig = false;
+    private AudioManager audioManager;
 
     void Awake()
     {
@@ -97,12 +98,12 @@ public class GameManager : MonoBehaviour
             if (allScores[i].score >= 0)
             {
                 countPoint++;
-                Debug.Log("Ha sumado");
+                //Debug.Log("Ha sumado");
             }
             else
             {
                 countPoint--;
-                Debug.Log("Ha restado");
+                //Debug.Log("Ha restado");
             }
         }
 
@@ -114,24 +115,24 @@ public class GameManager : MonoBehaviour
         {
             mood = true;
         }
-        Debug.Log("Mood: " + mood + " CountPoint: " + countPoint);
+        //Debug.Log("Mood: " + mood + " CountPoint: " + countPoint);
 
         pauseInputAction = pauseAction.actions["Pause"];
-
+        audioManager = GameObject.Find("MusicManager").GetComponent<AudioManager>();
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Time.timeScale = 1f;
-       healthBar.value = 1f;
-       scoreText.text = "Score: " + score;
-       gameOverPanel.SetActive(false);
-       contractedPanel.SetActive(false);
-       partnerPanel2.SetActive(false);
-       contractedHabText.SetActive(false);
-       partnerHabText.SetActive(false);
-       //pausePanel.SetActive(false);
+        healthBar.value = 1f;
+        scoreText.text = "Score: " + score;
+        gameOverPanel.SetActive(false);
+        contractedPanel.SetActive(false);
+        partnerPanel2.SetActive(false);
+        contractedHabText.SetActive(false);
+        partnerHabText.SetActive(false);
+        //pausePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -181,13 +182,11 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered && !isPaused)
+            if ((Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered )&& !isPaused && !audioManager.isConfig && !audioManager.isMusic)
             {
                 Pause();
-                isPaused = true;
-            }else if (Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered && isPaused)
+            }else if ((Input.GetKeyDown(KeyCode.Escape) || pauseInputAction.triggered) && isPaused && !audioManager.isConfig && !audioManager.isMusic)
             {
-                isPaused = false;
                 Continue();
             }
 
@@ -198,6 +197,7 @@ public class GameManager : MonoBehaviour
     }
     public void Pause()
     {
+        isPaused = true;
         pausePanel.SetActive(true);
         EventSystem.current.SetSelectedGameObject(butonLocal);
         Time.timeScale = 0f;
@@ -205,6 +205,7 @@ public class GameManager : MonoBehaviour
 
     public void Continue()
     {
+        isPaused = false;
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
     }
