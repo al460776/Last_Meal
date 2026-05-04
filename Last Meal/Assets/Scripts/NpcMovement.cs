@@ -14,11 +14,20 @@ public class NpcMovement : MonoBehaviour
     private float stopTimer = 0f;
     public bool isStopped = false;
 
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        if (GameManager.mood)
+        {
+            animator.SetBool("Devil", true);
+        }
+    }
+/*
     void Start()
     {
         animator = GetComponent<Animator>();
     }
-
+*/
 
     // Update is called once per frame
     void Update()
@@ -38,35 +47,77 @@ public class NpcMovement : MonoBehaviour
 
         if (isStopped)
         {
-            if (villager)
+            if (!GameManager.mood)
             {
-                animator.SetBool("VillagerStop", true);
+                if (villager)
+                {
+                    animator.SetBool("VillagerStop", true);
+                }
+                else
+                {
+                    animator.SetBool("ThiefStop", true);
+                }
+                stopTimer += Time.deltaTime;
+                if (stopTimer >= stopDuration)
+                {
+                    isStopped = false;
+                    stopTimer = 0f;
+                    Destroy(gameObject);
+                }
             }
             else
             {
-                animator.SetBool("ThiefStop", true);
+                if (villager)
+                {
+                    animator.SetBool("DevilStop", true);
+                }
+                else
+                {
+                    animator.SetBool("DevilStop", true);
+                }
+                stopTimer += Time.deltaTime;
+                if (stopTimer >= stopDuration)
+                {
+                    isStopped = false;
+                    stopTimer = 0f;
+                    Destroy(gameObject);
+                } 
             }
-            stopTimer += Time.deltaTime;
-            if (stopTimer >= stopDuration)
-            {
-                isStopped = false;
-                stopTimer = 0f;
-                Destroy(gameObject);
-            }
+            
         }
 
         if (gameManager.isPartnerActive)
         {
-            if (villager)
+            if (GameManager.mood)
             {
-                animator.SetBool("Partner", true);
+                if (!villager)
+                {
+                    animator.SetBool("DevilPartner", true);
+                }
+            }
+            else
+            {
+                if (villager)
+                {
+                    animator.SetBool("Partner", true);
+                }
             }
         }
         else
         {
-            if (villager)
+            if (GameManager.mood)
             {
-                animator.SetBool("Partner", false);
+                if (!villager)
+                {
+                    animator.SetBool("DevilPartner", false);
+                }
+            }
+            else
+            {
+                if (villager)
+                {
+                    animator.SetBool("Partner", false);
+                }
             }
         }
     }
