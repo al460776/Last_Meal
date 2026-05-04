@@ -184,6 +184,7 @@ MonoBehaviour:
   triggerSize: {x: 2, y: 2}
   targetPosition: {x: 0, y: 0, z: 0}
   speed: 10
+  stopDuration: 0.8
 --- !u!95 &-7033434533333195439
 Animator:
   serializedVersion: 7

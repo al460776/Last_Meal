@@ -15,40 +15,77 @@ public class ContractedCollision : MonoBehaviour
     public float stopDuration = 0.6f;
     private float stopTimer = 0f;
     private bool isStopped = false;
-    
+
+    void Awake()
+    {
+        animator = GetComponent<Animator>();
+        if (GameManager.mood)
+        {
+            animator.SetBool("Devil", true);
+        }
+    }
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         triggerCollider = GetComponent<BoxCollider2D>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         triggerCollider.isTrigger = false;
         triggerCollider.size = triggerSize;
     }
 
     void Update()
     {
-       if (targetPosition != null)
+        if (!GameManager.mood)
         {
-            animator.SetBool("isWalking", true);
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            if (targetPosition != transform.position)
+            {
+                animator.SetBool("IsWalking", true);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            }
+            else
+            {
+                animator.SetBool("IsWalking", false);
+            }
+
+            if (isStopped)
+            {
+                animator.SetBool("ContractedStop", true);
+                stopTimer += Time.deltaTime;
+                if (stopTimer >= stopDuration)
+                {
+                    isStopped = false;
+                    //AutoDestroy();
+                    stopTimer = 0f;
+                    Destroy(gameObject);
+                }
+                
+            }
         }
         else
         {
-            animator.SetBool("isWalking", false);
-        }
-
-        if (isStopped)
-        {
-            animator.SetBool("ContractedStop", true);
-            stopTimer += Time.deltaTime;
-            if (stopTimer >= stopDuration)
+            if (targetPosition != transform.position)
             {
-                isStopped = false;
-                //AutoDestroy();
-                stopTimer = 0f;
-                Destroy(gameObject);
+                animator.SetBool("DevilWalk", true);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
             }
-            
+            else
+            {
+                animator.SetBool("DevilWalk", false);
+            }
+
+            if (isStopped)
+            {
+                animator.SetBool("DevilStop", true);
+                stopTimer += Time.deltaTime;
+                if (stopTimer >= stopDuration)
+                {
+                    isStopped = false;
+                    //AutoDestroy();
+                    stopTimer = 0f;
+                    Destroy(gameObject);
+                }
+                
+            }
         }
     }
 
