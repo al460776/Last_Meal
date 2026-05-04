@@ -91,38 +91,81 @@ public class ContractedCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-      if(collision.gameObject.CompareTag("Villager") || collision.gameObject.CompareTag("Player"))
+        if (!GameManager.mood)
         {
-            triggerCollider.isTrigger = true;
-        }   
+            if(collision.gameObject.CompareTag("Villager") || collision.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.isTrigger = true;
+            }   
+        }
+        else
+        {
+            if(collision.gameObject.CompareTag("Thief") || collision.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.isTrigger = true;
+            }   
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         //animator.SetBool("ContractedStop", true);
-        if (other.gameObject.CompareTag("Thief"))
+        if (!GameManager.mood)
         {
-            triggerCollider.isTrigger = false;        
+            if (other.gameObject.CompareTag("Thief"))
+            {
+                triggerCollider.isTrigger = false;        
+            }
         }
+        else
+        {
+            if (other.gameObject.CompareTag("Villager"))
+            {
+                triggerCollider.isTrigger = false;        
+            } 
+        }
+
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Thief"))
+        if (!GameManager.mood)
         {
-            gameManager.ScorePointsPlayer(collision);
-            isStopped = true;
-            //Destroy(gameObject);
+            if (collision.gameObject.CompareTag("Thief"))
+            {
+                gameManager.ScorePointsPlayer(collision);
+                isStopped = true;
+                //Destroy(gameObject);
+            }
         }
-        
+        else
+        {
+            if (collision.gameObject.CompareTag("Villager"))
+            {
+                gameManager.ScorePointsPlayer(collision);
+                isStopped = true;
+                //Destroy(gameObject);
+            }
+        }
     }
 
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Villager") || other.gameObject.CompareTag("Player"))
+        if (!GameManager.mood)
         {
-            triggerCollider.enabled = true;
+            if (other.gameObject.CompareTag("Villager") || other.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.enabled = true;
+            }
         }
+        else
+        {
+            if (other.gameObject.CompareTag("Thief") || other.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.enabled = true;
+            } 
+        }
+       
     }
 
     private void OnDrawGizmos()

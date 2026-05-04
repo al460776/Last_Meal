@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public ContractedSpawn contractedSpawn;
     public int countVillagers = 0;
+    public int countThieves = 0;
     //Contador pa JSON y mostrar en pantalla
     public int countThievesEnter = 0;
     public int countVillagersEnter = 0;
@@ -140,36 +141,73 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameOver)
         {
-             contractedPanelText.text = countVillagers.ToString();
-            if (isGameOver == false)
+            //De aquí poner mood y cambiarlo al countThief, para usarlos.
+            if (!mood)
             {
-                time += Time.deltaTime;
-                minuts = Mathf.FloorToInt(time / 60);
-                seconds = Mathf.FloorToInt(time % 60);
-            }
+               contractedPanelText.text = countVillagers.ToString();
+                if (isGameOver == false)
+                {
+                    time += Time.deltaTime;
+                    minuts = Mathf.FloorToInt(time / 60);
+                    seconds = Mathf.FloorToInt(time % 60);
+                }
 
-            if (countVillagers >= 10)
-            {
-                contractedPanel.SetActive(true);
-                contractedHabText.SetActive(true);
+                if (countVillagers >= 10)
+                {
+                    contractedPanel.SetActive(true);
+                    contractedHabText.SetActive(true);
+                }
+                else
+                {
+                    contractedPanel.SetActive(false);
+                    contractedHabText.SetActive(false);
+                }
+
+                if (countVillagers >= 20)
+                {
+                    partnerPanel2.SetActive(true);
+                    partnerHabText.SetActive(true);
+                }
+                else
+                {
+                    partnerPanel2.SetActive(false);
+                    partnerHabText.SetActive(false);
+                }
             }
             else
             {
-                contractedPanel.SetActive(false);
-                contractedHabText.SetActive(false);
-            }
+                contractedPanelText.text = countThieves.ToString();
+                if (isGameOver == false)
+                {
+                    time += Time.deltaTime;
+                    minuts = Mathf.FloorToInt(time / 60);
+                    seconds = Mathf.FloorToInt(time % 60);
+                }
 
-            if (countVillagers >= 20)
-            {
-                partnerPanel2.SetActive(true);
-                partnerHabText.SetActive(true);
-            }
-            else
-            {
-                partnerPanel2.SetActive(false);
-                partnerHabText.SetActive(false);
-            }
+                if (countThieves >= 10)
+                {
+                    contractedPanel.SetActive(true);
+                    contractedHabText.SetActive(true);
+                }
+                else
+                {
+                    contractedPanel.SetActive(false);
+                    contractedHabText.SetActive(false);
+                }
 
+                if (countThieves >= 20)
+                {
+                    partnerPanel2.SetActive(true);
+                    partnerHabText.SetActive(true);
+                }
+                else
+                {
+                    partnerPanel2.SetActive(false);
+                    partnerHabText.SetActive(false);
+                }
+            }
+            
+        //Hasta aquí para el Mood
             if (isPartnerActive)
             {
                 partnerDuration -= Time.deltaTime;
@@ -212,44 +250,91 @@ public class GameManager : MonoBehaviour
 
     public void ScorePointsRestaurant(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Villager"))
+        if(!mood)
         {
-            score += 5;
-            Destroy(collision.gameObject);
-            countVillagers++;
-            countVillagersEnter++;
-            UpdateScoreText();
-        }
+            if (collision.gameObject.CompareTag("Villager"))
+            {
+                score += 5;
+                Destroy(collision.gameObject);
+                countVillagers++;
+                countVillagersEnter++;
+                UpdateScoreText();
+            }
 
-        if (collision.gameObject.CompareTag("Thief"))
+            if (collision.gameObject.CompareTag("Thief"))
+            {
+                score -= 3;
+                Destroy(collision.gameObject);
+                countThievesEnter++;
+                UpdateScoreText();
+                SubstractLive();
+            }
+        }
+        else
         {
-            score -= 3;
-            Destroy(collision.gameObject);
-            countThievesEnter++;
-            UpdateScoreText();
-            SubstractLive();
+            if (collision.gameObject.CompareTag("Thief"))
+            {
+                score += 5;
+                Destroy(collision.gameObject);
+                countThieves++;
+                countThievesEnter++;
+                UpdateScoreText();
+            }
+
+            if (collision.gameObject.CompareTag("Villager"))
+            {
+                score -= 3;
+                Destroy(collision.gameObject);
+                countVillagersEnter++;
+                UpdateScoreText();
+                SubstractLive();
+            }
         }
     }
 
     public void ScorePointsPlayer(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Villager"))
+        if (!mood)
         {
-            score -= 5;
-            NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
-            npc.isStopped = true;
-            countVillagersBlock++;
-            UpdateScoreText();
-        }
+            if (collision.gameObject.CompareTag("Villager"))
+            {
+                score -= 5;
+                NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+                npc.isStopped = true;
+                countVillagersBlock++;
+                UpdateScoreText();
+            }
 
-        if (collision.gameObject.CompareTag("Thief"))
-        {
-            score += 3;
-            NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
-            npc.isStopped = true;
-            countThievesBlock++;
-            UpdateScoreText();
+            if (collision.gameObject.CompareTag("Thief"))
+            {
+                score += 3;
+                NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+                npc.isStopped = true;
+                countThievesBlock++;
+                UpdateScoreText();
+            }
         }
+        else
+        {
+            if (collision.gameObject.CompareTag("Thief"))
+            {
+                score -= 5;
+                NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+                npc.isStopped = true;
+                countThievesBlock++;
+                UpdateScoreText();
+            }
+
+            if (collision.gameObject.CompareTag("Villager"))
+            {
+                score += 3;
+                NpcMovement npc = collision.gameObject.GetComponent<NpcMovement>();
+                npc.isStopped = true;
+                countVillagersBlock++;
+                UpdateScoreText();
+            }
+        }
+        
     }
 
     public void UpdateScoreText()
@@ -269,23 +354,49 @@ public class GameManager : MonoBehaviour
 
     public void ContracetHability()
     {
-        if (countVillagers >= 10)
+        if (!mood)
         {
-            //Futuro, linea dejar en solo = 0, o dejarlo así
-            countVillagers -= 10;
-            contractedSpawn.SpawnContractedVillager();
+          if (countVillagers >= 10)
+            {
+                countVillagers -= 10;
+                contractedSpawn.SpawnContractedVillager();
+            }
         }
+        else
+        {
+            if (countThieves >= 10)
+            {
+                countThieves -= 10;
+                contractedSpawn.SpawnContractedVillager();
+            }
+        }
+        
+
     }
 
     public void PartnerHability()
     {
-        if (countVillagers >= 20)
+        if (!mood)
         {
-            //Futuro, linea dejar en solo = 0, o dejarlo así
-            countVillagers -= 20;
-            isPartnerActive = true;
-            playerController.triggerSize = new Vector2(5f, 5f);
+            if (countVillagers >= 20)
+            {
+                //Futuro, linea dejar en solo = 0, o dejarlo así
+                countVillagers -= 20;
+                isPartnerActive = true;
+                playerController.triggerSize = new Vector2(5f, 5f);
+            }
         }
+        else
+        {
+            if (countThieves >= 20)
+            {
+                //Futuro, linea dejar en solo = 0, o dejarlo así
+                countThieves -= 20;
+                isPartnerActive = true;
+                playerController.triggerSize = new Vector2(5f, 5f);
+            }
+        }
+        
     }
 
     public void GameOver()
@@ -298,8 +409,17 @@ public class GameManager : MonoBehaviour
         contractedPanelText.gameObject.SetActive(false);
         contractedHabText.SetActive(false);
         partnerHabText.SetActive(false);
-        int score2 = (score + countVillagersEnter + countThievesBlock - countThievesEnter - countVillagersBlock) * (int)Math.Round(time) / 2;
-        gameOverText.text = "Game Over!\n\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock + "\nFinal Score: " + score2;
+        int score2 = 0;
+        if (!mood)
+        {
+            score2 = (score + countVillagersEnter + countThievesBlock - countThievesEnter - countVillagersBlock) * (int)Math.Round(time) / 2;
+        }
+        else
+        {
+            score2 = -(score + countVillagersEnter + countThievesBlock - countThievesEnter - countVillagersBlock) * (int)Math.Round(time) / 2;   
+        }
+        //Revisar a futuro el texto si meterle de nuevo uno más de  \n después del GO, muchos puntos no se ve bien
+        gameOverText.text = "Game Over!\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock + "\nFinal Score: " + score2;
         score = score2;
         Debug.Log("Game Over!");
         EventSystem.current.SetSelectedGameObject(butonFinal);

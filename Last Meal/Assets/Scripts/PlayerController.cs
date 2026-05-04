@@ -96,21 +96,19 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             } 
-        }
-        
+        } 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Opción 1
         if(gameManager.isGameOver == false)
         {
             Vector2 stick = moveAction.ReadValue<Vector2>();
             float ejeX = stick.x;
             float ejeY = stick.y;
 
-            //Prueba mejora Zona muerta Mando
+            //Prueba mejora Zona muerta Mando, bajar pa mejora menos ded mas diago más sensi
             float deadZo = 0.23f;
             float diagonales = 0.77f;
 
@@ -200,24 +198,49 @@ public class PlayerController : MonoBehaviour
     {
         if (gameManager.isPartnerActive)
         {
-            if(collision.gameObject.CompareTag("Villager"))
+            if (!GameManager.mood)
             {
-                triggerCollider.isTrigger = true;
-            }
-            else
-            {
-                gameManager.ScorePointsPlayer(collision);
-                if (GameManager.mood)
+                if(collision.gameObject.CompareTag("Villager"))
                 {
-                    animator.SetBool("EvilStop", true);
+                    triggerCollider.isTrigger = true;
                 }
                 else
                 {
-                    animator.SetBool("GodStop", true);
-                }
-                isStopped = true;
+                    gameManager.ScorePointsPlayer(collision);
+                    if (GameManager.mood)
+                    {
+                        animator.SetBool("EvilStop", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("GodStop", true);
+                    }
+                    isStopped = true;
 
+                }
             }
+            else
+            {
+                if(collision.gameObject.CompareTag("Thief"))
+                {
+                    triggerCollider.isTrigger = true;
+                }
+                else
+                {
+                    gameManager.ScorePointsPlayer(collision);
+                    if (GameManager.mood)
+                    {
+                        animator.SetBool("EvilStop", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("GodStop", true);
+                    }
+                    isStopped = true;
+
+                }
+            }
+
         }
         else if(collision.gameObject.CompareTag("Thief") || collision.gameObject.CompareTag("Villager"))
         {
@@ -236,16 +259,30 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Thief"))
+        if (!GameManager.mood)
         {
-            triggerCollider.isTrigger = false;        
+            if (other.gameObject.CompareTag("Thief"))
+            {
+                triggerCollider.isTrigger = false;        
+            }
         }
+        else
+        {
+            if (other.gameObject.CompareTag("Villager"))
+            {
+                triggerCollider.isTrigger = false;        
+            }
+        }
+        
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Thief"))
         {
             gameManager.ScorePointsPlayer(collision);  
+        }else if (collision.gameObject.CompareTag("Villager"))
+        {
+            gameManager.ScorePointsPlayer(collision);
         }
         
     }
@@ -253,10 +290,21 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Villager") || other.gameObject.CompareTag("Player"))
+        if (!GameManager.mood)
         {
-            triggerCollider.enabled = true;
+           if (other.gameObject.CompareTag("Villager") || other.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.enabled = true;
+            }
         }
+        else
+        {
+            if (other.gameObject.CompareTag("Thief") || other.gameObject.CompareTag("Player"))
+            {
+                triggerCollider.enabled = true;
+            }
+        }
+        
     }
 
     private void OnDrawGizmos()
