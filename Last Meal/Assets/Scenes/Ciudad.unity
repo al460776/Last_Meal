@@ -2364,6 +2364,7 @@ MonoBehaviour:
   gameOverText: {fileID: 1714366330}
   contractedSpawn: {fileID: 1088051210}
   countVillagers: 0
+  countThieves: 0
   countThievesEnter: 0
   countVillagersEnter: 0
   countVillagersBlock: 0
@@ -2373,6 +2374,12 @@ MonoBehaviour:
   partnerHabText: {fileID: 2027656167}
   contractedPanel: {fileID: 272794213}
   partnerPanel2: {fileID: 1148078476}
+  devilSpritesHud:
+  - {fileID: -5649572094675707813, guid: 6707d1488460716439ebdbf141e20651, type: 3}
+  - {fileID: -4527628776176113947, guid: 6707d1488460716439ebdbf141e20651, type: 3}
+  godSpritesHud:
+  - {fileID: 8784697009527752851, guid: 2c3a7e1c91f529c4f8d4a47fe61c4550, type: 3}
+  - {fileID: 1011972004200790290, guid: 2c3a7e1c91f529c4f8d4a47fe61c4550, type: 3}
   pausePanel: {fileID: 179332724}
   partnerDuration: 10
   isPartnerActive: 0
@@ -2383,6 +2390,7 @@ MonoBehaviour:
   pauseAction: {fileID: 6572363699521711486}
   butonLocal: {fileID: 2111921840}
   butonFinal: {fileID: 484615155}
+  isConfig: 0
 --- !u!4 &856283228
 Transform:
   m_ObjectHideFlags: 0
