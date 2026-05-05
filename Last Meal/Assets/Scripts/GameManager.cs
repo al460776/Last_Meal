@@ -9,8 +9,6 @@ using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-
-
 public class GameManager : MonoBehaviour
 {
     public float time = 0f;
@@ -38,13 +36,15 @@ public class GameManager : MonoBehaviour
 
     public GameObject contractedPanel;
     public GameObject partnerPanel2;
+    public Sprite[] devilSpritesHud;
+    public Sprite[] godSpritesHud;
     public GameObject pausePanel;
 
     public float partnerDuration = 10f;
     public bool isPartnerActive = false;
     public PlayerController playerController;
 
-    //Sprite pa cambiar
+    //Sprite pa cambiar (Creo que esto al final no se usa)
     public Sprite spriteDefault;
     public Sprite spritePartner;
 
@@ -134,6 +134,16 @@ public class GameManager : MonoBehaviour
         contractedHabText.SetActive(false);
         partnerHabText.SetActive(false);
         //pausePanel.SetActive(false);
+        if (mood)
+        {
+            contractedPanel.GetComponent<Image>().sprite = devilSpritesHud[0];
+            partnerPanel2.GetComponent<Image>().sprite = devilSpritesHud[1];
+        }
+        else
+        {
+            contractedPanel.GetComponent<Image>().sprite = godSpritesHud[0];
+            partnerPanel2.GetComponent<Image>().sprite = godSpritesHud[1];
+        }
     }
 
     // Update is called once per frame
