@@ -33,7 +33,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI contractedPanelText;
     public GameObject contractedHabText;
     public GameObject partnerHabText;
-
+    public GameObject backContracted;
+    public GameObject backPartner;
     public GameObject contractedPanel;
     public GameObject partnerPanel2;
     public Sprite[] devilSpritesHud;
@@ -133,6 +134,8 @@ public class GameManager : MonoBehaviour
         partnerPanel2.SetActive(false);
         contractedHabText.SetActive(false);
         partnerHabText.SetActive(false);
+        backContracted.SetActive(false);
+        backPartner.SetActive(false);
         //pausePanel.SetActive(false);
         if (mood)
         {
@@ -166,22 +169,26 @@ public class GameManager : MonoBehaviour
                 {
                     contractedPanel.SetActive(true);
                     contractedHabText.SetActive(true);
+                    backContracted.SetActive(true);
                 }
                 else
                 {
                     contractedPanel.SetActive(false);
                     contractedHabText.SetActive(false);
+                    backContracted.SetActive(false);
                 }
 
                 if (countVillagers >= 20)
                 {
                     partnerPanel2.SetActive(true);
                     partnerHabText.SetActive(true);
+                    backPartner.SetActive(true);
                 }
                 else
                 {
                     partnerPanel2.SetActive(false);
                     partnerHabText.SetActive(false);
+                    backPartner.SetActive(false);
                 }
             }
             else
@@ -198,22 +205,26 @@ public class GameManager : MonoBehaviour
                 {
                     contractedPanel.SetActive(true);
                     contractedHabText.SetActive(true);
+                    backContracted.SetActive(true);
                 }
                 else
                 {
                     contractedPanel.SetActive(false);
                     contractedHabText.SetActive(false);
+                    backContracted.SetActive(false);
                 }
 
                 if (countThieves >= 20)
                 {
                     partnerPanel2.SetActive(true);
                     partnerHabText.SetActive(true);
+                    backPartner.SetActive(true);
                 }
                 else
                 {
                     partnerPanel2.SetActive(false);
                     partnerHabText.SetActive(false);
+                    backPartner.SetActive(false);
                 }
             }
             
@@ -429,7 +440,7 @@ public class GameManager : MonoBehaviour
             score2 = -(score + countVillagersEnter + countThievesBlock - countThievesEnter - countVillagersBlock) * (int)Math.Round(time) / 2;   
         }
         //Revisar a futuro el texto si meterle de nuevo uno más de  \n después del GO, muchos puntos no se ve bien
-        gameOverText.text = "Game Over!\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block: " + countVillagersBlock + "\nThief Block: " + countThievesBlock + "\nFinal Score: " + score2;
+        gameOverText.text = "Game Over!\nScore: " + score + "\nTime: " + minuts + ":" + seconds + "\nVillager Enter: " + countVillagersEnter + "\nThief Enter: " + countThievesEnter + "\nVillager Block pt: " + countVillagersBlock + "\nThief Block pt: " + countThievesBlock + "\nFinal Score: " + score2;
         score = score2;
         Debug.Log("Game Over!");
         EventSystem.current.SetSelectedGameObject(butonFinal);
